@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnos Megatiendas</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Fila 1: Gestión de Empleados y Generación de Cronogramas -->
+        <div class="fila-1">
+            <div class="gestion-empleados">
+                <h2>Gestión de Empleados</h2>
+                <div class="empleado-form">
+                    <input type="text" id="nombreEmpleado" placeholder="Nombre del empleado">
+                    <input type="text" id="cargoEmpleado" placeholder="Cargo">
+                    <button id="agregarEmpleado">Agregar</button>
+                </div>
+                <div id="listaEmpleados" class="lista-empleados">
+                    <!-- Aquí se mostrarán los empleados dinámicamente -->
+                </div>
+            </div>
+
+            <div class="gestion-cronogramas">
+                <h2>Generación de Cronogramas</h2>
+                <p>Deberías crear un cronograma en 7 días, ya sea semanal o mensual.</p>
+                <div class="fs">
+                    <select class="form-select" id="tipoTurnoSelect">
+                        <option selected>Seleccione el tipo de turno</option>
+                        <option value="1">Semanal</option>
+                        <option value="2">Mensual</option>
+                    </select>
+                </div>
+                
+                <div class="fs">
+                    <input type="date" id="fechaInicio" placeholder="Fecha de inicio">
+                </div>
+                
+                <div class="fs">
+                    <input type="date" id="fechaFin" placeholder="Fecha de fin">
+                </div>
+
+                <div class="generarCrono">
+                    <button id="generarCronograma">Generar Cronograma</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fila 2: Cronogramas Generados -->
+        <div class="fila-2">
+            <h2>Cronogramas Generados</h2>
+            <div class="lista-cronogramas" id="listaCronogramas">
+                <!-- Aquí se mostrarán los cronogramas generados -->
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

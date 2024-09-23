@@ -1,0 +1,114 @@
+/* Estilos globales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #EDF2F4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.center-horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    color: #2B2D42;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la fila 1: Gestión de Empleados y Generación de Cronogramas */
+.fila-1 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Espacio entre filas */
+}
+
+.gestion-empleados, .gestion-cronogramas {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1; /* Para que ocupen el mismo espacio */
+    margin: 0 10px; /* Espacio entre columnas */
+}
+
+.empleado-form, .cronograma-form {
+    display: flex;
+    gap: 10px;
+}
+
+select, input[type="date"], button {
+    width: 96%; /* Ocupa el 100% del ancho del contenedor */
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Para que el padding no agregue más ancho del esperado */
+}
+
+button {
+    background-color: #EF233C;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #D90429;
+}
+
+/* Estilos para la fila 2: Cronogramas Generados */
+.fila-2 {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.lista-empleados, .lista-cronogramas {
+    margin-top: 20px;
+}
+
+.lista-empleados div, .lista-cronogramas div, .lista-cronogramas-generados div {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background-color: #EDF2F4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fs {
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fst {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.generarCrono {
+    width: 97%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}

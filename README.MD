@@ -25,7 +25,6 @@ La clase inicializa varios atributos:
 Para decidir qué cajera debe ser asignada a un turno específico, se utiliza un criterio de prioridad basado en:
 - **Número de días trabajados**: Las cajeras con menos días trabajados tienen mayor prioridad.
 - **Número de días consecutivos**: Se intenta evitar asignar turnos consecutivos a las cajeras para prevenir sobrecarga laboral.
-![Ejemplo de Gráfico de ordenamiento de empleados por prioridad Prioridad](./logic/orden%20de%20prioridad.png)
 
 ### 3. Restricciones y Validaciones
 
@@ -48,16 +47,3 @@ Una vez asignados los turnos, se genera un cronograma que incluye:
 - **Asignación de turnos**: Qué cajera está asignada a cada tipo de turno en cada día.
 
 Además, se proporciona un informe detallado sobre el desempeño de cada cajera, incluyendo la cantidad de días trabajados y días consecutivos trabajados.
-
-
-## Ejemplo de Uso
-
-```python
-# Crear una instancia del asignador de turnos
-asignador = AsignadorTurnos(cajeras, "mes")
-
-# Asignar los turnos para el período seleccionado
-asignador.asignar_turnos(datetime(2024, 2, 1))
-
-# Mostrar el cronograma
-asignador.mostrar_cronograma()

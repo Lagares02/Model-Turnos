@@ -128,7 +128,7 @@ def promedio_ventas_por_semana(df):
     return promedio_por_semana_mes
 
 
-def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles=20):
+def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles):
     """
     Calcula las métricas de promedio de facturas por hora y por turnos, tanto para días normales como de mayor demanda,
     y luego asigna cajas disponibles en función de la proporción de facturas por turno.
@@ -153,7 +153,8 @@ def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles=20):
     """
     
     # Días del mes considerados como de mayor demanda (independiente del mes o año)
-    dias_mayor_demanda = {1, 2, 3, 14, 15, 16, 17, 18, 27, 28, 29}
+    #dias_mayor_demanda = {1, 2, 3, 14, 15, 16, 17, 18, 27, 28, 29}
+    dias_mayor_demanda = {1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 27, 28, 29}
     
     # Agregar columnas adicionales para el análisis
     df['date'] = df['datetime'].dt.date

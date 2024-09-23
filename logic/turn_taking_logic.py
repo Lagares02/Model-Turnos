@@ -2,6 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime, timedelta
 import locale
+import os
+import sys
+
+# Añadir el directorio raíz del proyecto al PYTHONPATH
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from config.settings import N_CAJERAS
 
 # Establecer el locale a español (deberás tenerlo instalado en tu sistema)
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -227,7 +233,7 @@ class AsignadorTurnos:
 
 # test de la clase ----------------------------------------------------------------------
 
-n = 13  # Número de cajeras
+n = N_CAJERAS  # Número de cajeras
 cajeras = [f'empleada_{i}' for i in range(1, n + 1)]
 
 

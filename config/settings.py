@@ -9,11 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TURNOS = {"apertura": (6, 12), "medio": (13, 17), "cierre": (18, 22)}
 
 # numero de cajeras disponibles a evaluar 
-n_cajeras = 13  
+N_CAJERAS = 13  
 
 # numero de cajas disponibles 
-CANTIDAD_CAJAS = 10
+CANTIDAD_CAJAS = 10 
 
 # rutas de datasets
 DATASET = BASE_DIR / 'data' / 'ventas.csv'
-
