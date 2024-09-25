@@ -10,7 +10,7 @@ import os
 # Añadir el directorio raíz del proyecto al PYTHONPATH
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from config.settings import DATASET, TURNOS, CANTIDAD_CAJAS
+from config.settings import DATASET, TURNOS, N_CAJERAS
 
 # Cargar datos desde el archivo CSV
 df = pd.read_csv(DATASET, delimiter=';')
@@ -128,7 +128,7 @@ def promedio_ventas_por_semana(df):
     return promedio_por_semana_mes
 
 
-def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles):
+def obtener_metricas_y_proporcion(df, turnos, total_cajeras_disponibles):
     """
     Calcula las métricas de promedio de facturas por hora y por turnos, tanto para días normales como de mayor demanda,
     y luego asigna cajas disponibles en función de la proporción de facturas por turno.
@@ -139,7 +139,7 @@ def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles):
         DataFrame que contiene los datos de facturación. Debe incluir una columna 'datetime' y 'documento'.
     turnos : dict
         Diccionario con los turnos de trabajo. Las claves son los nombres de los turnos y los valores son tuplas (inicio, fin).
-    total_cajas_disponibles : int
+    total_cajeras_disponiblles : int
         El número total de cajas disponibles para asignar entre los turnos.
 
     Retorna:
@@ -190,7 +190,7 @@ def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles):
         for turno, promedio in prom_facturas_por_turnos.items():
             proporcion = promedio / total_prom_facturas if total_prom_facturas > 0 else 0
             proporciones[turno] = proporcion
-            cajas_asignadas = round(total_cajas_disponibles * proporcion)
+            cajas_asignadas = round(total_cajeras_disponibles * proporcion)
             cajas_por_turno[turno] = cajas_asignadas
 
         # Añadir las cajas por turno y las proporciones al diccionario de métricas
@@ -200,7 +200,7 @@ def obtener_metricas_y_proporcion(df, turnos, total_cajas_disponibles):
     return metrics
 
 # Ejemplo de uso de la función
-metrics = obtener_metricas_y_proporcion(df, TURNOS, CANTIDAD_CAJAS)
+metrics = obtener_metricas_y_proporcion(df, TURNOS, N_CAJERAS)
 
 # Imprimir los resultados
 print("Métricas por tipo de día:")
