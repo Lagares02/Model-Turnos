@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const listaCronogramas = document.getElementById("listaCronogramas");
     
     let empleados = [
-        { id: 1, nombre: "Juan Pérez", cargo: "Gerente" },
-        { id: 2, nombre: "María López", cargo: "Supervisor" },
-        { id: 3, nombre: "Carlos Rodríguez", cargo: "Operario" }
+        { id: 1, nombre: "Harold Lagares", cargo: "Cajero(a)" },
+        { id: 2, nombre: "Maria Gil", cargo: "Cajero(a)" },
+        { id: 3, nombre: "Carlos Agamez", cargo: "Cajero(a)" }
     ];
 
     let cronogramas = [

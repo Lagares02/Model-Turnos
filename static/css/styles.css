@@ -1,7 +1,20 @@
+/* paleta de colores  */
+:root {
+    /* Rojo */
+    --red: #e30613;
+    
+    /* Azul */
+    --blue: #164094b9;
+
+    /* Azul */
+    --blueslow: #EDF2F4;
+}
+
+
 /* Estilos globales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #EDF2F4;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: var(--blueslow);
     margin: 0;
     padding: 20px;
 }
@@ -51,7 +64,7 @@ select, input[type="date"], button {
 }
 
 button {
-    background-color: #EF233C;
+    background-color: var(--red);
     color: white;
     padding: 10px;
     border: none;
@@ -60,7 +73,7 @@ button {
 }
 
 button:hover {
-    background-color: #D90429;
+    background-color: var(--red);
 }
 
 /* Estilos para la fila 2: Cronogramas Generados */
@@ -71,7 +84,9 @@ button:hover {
 }
 
 .lista-empleados, .lista-cronogramas {
+    height: 200px;
     margin-top: 20px;
+    overflow-y: auto;
 }
 
 .lista-empleados div, .lista-cronogramas div, .lista-cronogramas-generados div {
@@ -79,7 +94,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 10px;
-    background-color: #EDF2F4;
+    background-color: var(--blue);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -111,4 +126,19 @@ button:hover {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 12px;
+}
+::-webkit-scrollbar-track {
+    background: white;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--blueslow);
+    border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #D90429;
 }
