@@ -1,0 +1,2 @@
+1. En la franja de 12 pm a 2 pm donde se solapan 2 turnos (Apertura - Cierre) la demanda de facturacion disminuye, lo que ocasiona una sobredotacion en ese trancurso
+

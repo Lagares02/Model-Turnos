@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turnos Megatiendas</title>
-    <link rel="icon" type="image/png" href="../../assets/icon.png">
+    <link rel="shortcut icon" href="https://genfavicon.com/tmp/icon_bf3752cc5bef0bbab6a88b65be0adb8f.ico">
 </head>
 <body>
     <div class="container">
@@ -50,10 +50,22 @@
         <!-- Fila 2: Cronogramas Generados -->
         <div class="fila-2">
             <h2>Cronogramas Generados</h2>
+
+            <div class="filtros-cronogramas">
+                <input type="date" id="fechaInicioFiltro" placeholder="Fecha de inicio filtro">
+                <input type="date" id="fechaFinFiltro" placeholder="Fecha de fin filtro">
+                <select id="filtroTipo">
+                    <option value="">Filtrar por tipo</option>
+                    <option value="semanal">Semanal</option>
+                    <option value="mensual">Mensual</option>
+                </select>
+            </div>
+
             <div class="lista-cronogramas" id="listaCronogramas">
                 <!-- Aquí se mostrarán los cronogramas generados -->
             </div>
         </div>
+
     </div>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>

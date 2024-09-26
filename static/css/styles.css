@@ -89,6 +89,51 @@ button:hover {
     overflow-y: auto;
 }
 
+.lista-cronogramas {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Permite que las tarjetas se muevan a la siguiente línea si no caben */
+}
+
+.filtros-cronogramas {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.tarjeta-cronograma {
+    background-color: #EDF2F4;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: calc(33.33% - 20px); /* Ajuste para mostrar 3 tarjetas por fila */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.33% - 20px); /* Ajuste flexible para que se adapten al espacio */
+}
+
+.tarjeta-cronograma h3 {
+    margin-top: 0;
+    color: #2B2D42;
+}
+
+.tarjeta-cronograma p {
+    margin: 5px 0;
+    color: #2B2D42;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .tarjeta-cronograma {
+        width: calc(50% - 20px); /* Ajusta a 2 tarjetas por fila en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .tarjeta-cronograma {
+        width: 100%; /* En pantallas pequeñas, las tarjetas ocupan el 100% */
+    }
+}
+
 .lista-empleados div, .lista-cronogramas div, .lista-cronogramas-generados div {
     padding: 10px;
     border: 1px solid #ccc;
@@ -136,9 +181,23 @@ button:hover {
     background: white;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--blueslow);
+    background: rgb(252, 169, 169);
     border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #D90429;
+}
+
+/* Estilo para el icono de eliminación */
+.eliminar-empleado {
+    cursor: pointer;
+    color: rgba(255, 0, 0, 0.801); /* Color rojo para indicar eliminación */
+    display: inline-flex; /* Ajustar tamaño */
+    align-items: center; /* Centrar verticalmente */
+    padding: 0;
+    margin-left: 10px; /* Espacio desde el nombre */
+}
+
+.eliminar-empleado:hover {
+    color: darkred; /* Cambiar color al pasar el ratón */
 }

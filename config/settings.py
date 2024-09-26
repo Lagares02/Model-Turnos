@@ -1,54 +1,36 @@
 from pathlib import Path
+import json
 
 # carpeta rais del proyecto 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# parameytros principales de manejo 
+# Ruta al archivo JSON de cajeros
+CAJEROS_FILE = BASE_DIR / 'config' / 'cajeros.json'
 
-"""# distribucion de turnos 
-TURNOS = {
-    "apertura": (6, 12), # 6 horas
-    "medio": (13, 17), # 4 horas
-    "cierre": (18, 22) # 4 horas
-}"""
+# Cargar cajeros desde el archivo JSON
+def cargar_cajeros():
+    with open(CAJEROS_FILE, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        return data.get("cajeros", [])
 
-"""# distribucion de turnos 
-TURNOS = {
-    "": (6, 14), # 8 horas
-    "Partido_1": (8, 12), # 4 horas
-    "Partido_2": (17, 20), # 4 horas
-    "cierre": (12, 20) # 8 horas
-}"""
+# Guardar cajeros en el archivo JSON
+def guardar_cajeros(cajeros):
+    with open(CAJEROS_FILE, 'w', encoding='utf-8') as file:
+        json.dump({"cajeros": cajeros}, file, ensure_ascii=False, indent=4)
 
-"""# distribucion de turnos 
-TURNOS = {
-    "Apertura": (6, 14), # 8 horas
-    "cierre": (12, 20) # 8 horas
-}"""
+# Cargar lista de cajeros al iniciar
+CAJEROS = cargar_cajeros()
 
 # distribucion de turnos 
 TURNOS = {
-    "6-7": (6, 7),
-    "7-8": (7, 8),
-    "8-9": (8, 9),
-    "9-10": (9, 10),
-    "10-11": (10, 11),
-    "11-12": (11, 12),
-    "12-13": (12, 13),
-    "13-14": (13, 14),
-    "14-15": (14, 15),
-    "15-16": (15, 16),
-    "16-17": (16, 17),
-    "17-18": (17, 18),
-    "18-19": (18, 19),
-    "19-20": (19, 20),
+    "apertura": (6, 12), # 8 horas
+    "Partido_1": (8, 12), # 4 horas
+    "Partido_2": (16, 20), # 4 horas
+    "cierre": (12, 18) # 8 horas
 }
 
 # numero de cajeras disponibles a evaluar 
-N_CAJERAS = 15  
-
-"""# numero de cajas disponibles 
-CANTIDAD_CAJAS = 12 """
+N_CAJERAS = 16  
 
 # rutas de datasets
 DATASET = BASE_DIR / 'data' / 'ventas.csv'

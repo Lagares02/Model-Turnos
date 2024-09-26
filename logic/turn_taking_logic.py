@@ -7,7 +7,7 @@ import sys
 
 # Añadir el directorio raíz del proyecto al PYTHONPATH
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from config.settings import N_CAJERAS
+from config.settings import N_CAJERAS, CAJEROS
 
 # Establecer el locale a español (deberás tenerlo instalado en tu sistema)
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -43,14 +43,15 @@ class AsignadorTurnos:
                 'dias_descanso': 0,
                 'dias_consecutivos': 0,
                 'ultimo_dia': -1,
-                "fechas_asignadas":[]
+                "fechas_asignadas":[],
+                "turnos": []
             }
             for nombre in cajeras
         }
         self.turnos_por_dia = {
-            "Apertura": 4,
-            "Medio": 5,
-            "Cierre": 1
+            "Apertura": 5,
+            "Partido": 4,
+            "Cierre": 3
         }
         self.cronograma = []
         self.dias_asignados = 0
@@ -147,13 +148,26 @@ class AsignadorTurnos:
                     turnos_dia[turno].append(empleado)
                     pers_dia.remove(empleado)
                     pers_dia.append(empleado)
+                    
+                    # Definir horas trabajadas según el turno
+                    if turno == "Apertura":
+                        horas_trabajadas = 6
+                    elif turno == "Cierre":
+                        horas_trabajadas = 6
+                    elif turno == "Partido":
+                        horas_trabajadas = 8
+                    else:
+                        horas_trabajadas = 0  # En caso de que haya un turno no definido
 
+                    # Actualizar la información de la cajera
                     self.cajeras_info[empleado]["dias_trabajados"] += 1
-                    self.cajeras_info[empleado]["horas_trabajadas"] += 8
+                    self.cajeras_info[empleado]["horas_trabajadas"] += horas_trabajadas
                     self.cajeras_info[empleado]["dias_repetidos"].append(dia + 1)
                     fecha_asignada = fecha + timedelta(days=dia)
                     dia_fecha = fecha_asignada.strftime('%A')
                     self.cajeras_info[empleado]["fechas_asignadas"].append(f"{fecha_asignada.strftime('%Y-%m-%d')}({dia_fecha})")
+                    self.cajeras_info[empleado]["turnos"].append(turno)
+
 
                     if self.trabajo_dia_consecutivo(empleado, dia):
                         self.cajeras_info[empleado]["dias_consecutivos"] += 1
@@ -164,6 +178,10 @@ class AsignadorTurnos:
 
             
             self.cronograma.append(turnos_dia)
+            
+            for empleado in self.cajeras_info.keys():
+                self.cajeras_info[empleado]["dias_descanso"] = dias_a_asignar - self.cajeras_info[empleado]["dias_trabajados"]
+
 
     def mostrar_cronograma(self):
         print(f"CRONOGRAMA {self.tipo_cronograma}")
@@ -180,62 +198,10 @@ class AsignadorTurnos:
             for k,v in info.items():
                 print(f"   {k}: {v}")
 
-    
-    def graf_prioridad(self,list_prioridad, dia_asignado ):
-        
-        # Extraer nombres de empleados y métricas
-        nombres = [empleado for empleado in list_prioridad]
-        dias_trabajados = [self.cajeras_info[empleado]['dias_trabajados'] for empleado in list_prioridad]
-        dias_consecutivos = [self.cajeras_info[empleado]['dias_consecutivos'] for empleado in list_prioridad]
-        
-        # Configuración de las posiciones y el ancho de las barras
-        x = np.arange(len(nombres))
-        ancho_barras = 0.35  # Ancho de las barras
-
-        # Crear la figura y los ejes
-        fig, ax = plt.subplots(figsize=(10, 6))
-
-        # Graficar las barras para cada métrica
-        barras1 = ax.bar(x - ancho_barras/2, dias_trabajados, ancho_barras, label='Días Trabajados')
-        barras2 = ax.bar(x + ancho_barras/2, dias_consecutivos, ancho_barras, label='Días Consecutivos')
-
-        # Añadir etiquetas, título y leyenda
-        ax.set_xlabel('Empleados')
-        ax.set_ylabel('Número de Días')
-        ax.set_title(f'Prioridad de Empleados - Día Asignado {dia_asignado}')
-        ax.set_xticks(x)
-        ax.set_xticklabels(nombres, rotation=45, ha='right')
-        ax.legend()
-
-        # Añadir etiquetas de los valores encima de las barras
-        def etiquetar_barras(barras):
-            for barra in barras:
-                altura = barra.get_height()
-                ax.annotate('{}'.format(altura),
-                            xy=(barra.get_x() + barra.get_width() / 2, altura),
-                            xytext=(0, 3),  # 3 puntos verticales de desplazamiento
-                            textcoords="offset points",
-                            ha='center', va='bottom')
-
-        etiquetar_barras(barras1)
-        etiquetar_barras(barras2)
-
-        # Ajustar el diseño
-        plt.tight_layout()
-
-        # Guardar la gráfica como una imagen en un archivo
-        plt.savefig(f"prioridad_{dia_asignado}.png", format='png')
-        plt.close()
-        
-        print(f"Gráfico guardado como ")
-
-
-
 # test de la clase ----------------------------------------------------------------------
 
 n = N_CAJERAS  # Número de cajeras
-cajeras = [f'empleada_{i}' for i in range(1, n + 1)]
-
+cajeras = CAJEROS
 
 # Crear una instancia del asignador de turnos
 asignador = AsignadorTurnos(cajeras,"mes")
@@ -259,4 +225,3 @@ asignador.asignar_turnos(fecha)
 
 # Mostrar el cronograma
 asignador.mostrar_cronograma()
-
