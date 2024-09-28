@@ -1,17 +1,269 @@
-<!-- templates/cronogramas/cronogramas_semana.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronograma de Semana</title>
-    <!-- Añadir estilos y scripts necesarios aquí -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        td {
+            height: 50px;
+        }
+        .columEmple {
+            width: 30%;
+        }
+        .turno {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 0.8em;
+        }
+        .turno-A {
+            background-color: #FFD700; /* Amarillo */
+        }
+        .turno-P {
+            background-color: #32CD32; /* Verde */
+        }
+        .turno-C {
+            background-color: #FF4500; /* Rojo */
+        }
+        .rest {
+            color: #aaa; /* Color gris para los días de descanso */
+            font-size: 1.5em;
+        }
+        .legend {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .legend span {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        /* Estilo para las tarjetas de empleados */
+        .employee-info-container {
+            margin-top: 40px;
+        }
+        .employee-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.418);
+            background-color: #f9f9f9;
+        }
+        .employee-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .employee-card details {
+            margin: 10px 0;
+        }
+        .employee-card details summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Detalles del Cronograma de Semana (ID: {{ cronograma.id }})</h1>
-        <pre>{{ cronograma | tojson(indent=4) }}</pre>
-        <!-- Aquí se mostrarán los detalles del cronograma -->
+        <h1>Detalles del Cronograma de Semana con ID: {{ cronograma.id }}</h1>
+        <table id="scheduleTable">
+            <thead>
+                <tr>
+                    <th class="columEmple">Empleado</th>
+                    <th>Lun</th>
+                    <th>Mar</th>
+                    <th>Mié</th>
+                    <th>Jue</th>
+                    <th>Vie</th>
+                    <th>Sáb</th>
+                    <th>Dom</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas de datos dinámicas serán insertadas aquí -->
+            </tbody>
+        </table>
+        <!-- Leyenda de Turnos -->
+        <div class="legend">
+            <span><span class="turno turno-A">A</span> Apertura (6:00 - 12:00)</span>
+            <span><span class="turno turno-P">P</span> Partido (8:00 - 12:00 / 16:00 - 20:00)</span>
+            <span><span class="turno turno-C">C</span> Cierre (12:00 - 18:00)</span>
+            <span><span class="rest">×</span> Descanso</span>
+        </div>
+        <div class="employee-info-container">
+            <h1>Información de Empleados</h1>
+            <div id="employeeCards">
+                <!-- Tarjetas dinámicas de empleados se generarán aquí -->
+            </div>
+        </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cronograma = {{ cronograma | tojson }};
+            const tableBody = document.getElementById("scheduleTable").querySelector("tbody");
+            // Información adicional de empleados desde el informe del cronograma
+            const informeEmpleados = cronograma.informe;
+            const employeeCardsContainer = document.getElementById("employeeCards");
+
+            // Objeto para almacenar los días que trabaja cada empleado y su turno
+            const employeeSchedule = {};
+
+            for (const dia in cronograma.cronogramas) {
+                const data = cronograma.cronogramas[dia];
+                const dayIndex = parseInt(dia.replace("dia_", "")) - 1; // Convertir "dia_1" en índice 0, "dia_2" en índice 1, etc.
+                const daysOfWeek = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+                const currentDay = daysOfWeek[dayIndex];
+
+                // Procesar los turnos para cada tipo
+                ["Apertura", "Cierre", "Partido"].forEach(turno => {
+                    if (data.turnos[turno]) {
+                        data.turnos[turno].forEach(empleado => {
+                            if (!employeeSchedule[empleado]) {
+                                employeeSchedule[empleado] = { 
+                                    "Lun": [], "Mar": [], "Mié": [], 
+                                    "Jue": [], "Vie": [], "Sáb": [], "Dom": [] 
+                                };
+                            }
+                            employeeSchedule[empleado][currentDay].push(turno);
+                        });
+                    }
+                });
+            }
+
+            // Generar filas de la tabla
+            for (const empleado in employeeSchedule) {
+                const tr = document.createElement("tr");
+
+                // Columna de nombre del empleado
+                const nameCell = document.createElement("td");
+                nameCell.textContent = empleado;
+                tr.appendChild(nameCell);
+
+                // Columnas de días de la semana
+                const schedule = employeeSchedule[empleado];
+                for (const day in schedule) {
+                    const dayCell = document.createElement("td");
+                    
+                    if (schedule[day].length === 0) {
+                        // Día de descanso, mostrar una equis
+                        const restSymbol = document.createElement("span");
+                        restSymbol.classList.add("rest");
+                        restSymbol.textContent = "×";
+                        dayCell.appendChild(restSymbol);
+                    } else {
+                        // Añadir un círculo para cada turno
+                    schedule[day].forEach(turno => {
+                        const span = document.createElement("span");
+                        span.classList.add("turno");
+                        span.textContent = turno[0]; // Primera letra (A, P, C)
+                        
+                        // Aplicar clase de color según el turno
+                        if (turno === "Apertura") {
+                            span.classList.add("turno-A");
+                        } else if (turno === "Partido") {
+                            span.classList.add("turno-P");
+                        } else if (turno === "Cierre") {
+                            span.classList.add("turno-C");
+                        }
+                        
+                        dayCell.appendChild(span);
+                        dayCell.appendChild(document.createTextNode(" ")); // Espacio entre círculos
+                    });
+                    }
+                    
+                    tr.appendChild(dayCell);
+                }
+
+                tableBody.appendChild(tr);
+            }
+
+            for (const empleado in informeEmpleados) {
+            const data = informeEmpleados[empleado];
+
+            // Crear tarjeta para cada empleado
+            const card = document.createElement("div");
+            card.className = "employee-card";
+
+            // Nombre del empleado
+            const nameElement = document.createElement("h3");
+            nameElement.textContent = empleado;
+            card.appendChild(nameElement);
+
+            // Días trabajados (desplegable)
+            const diasTrabajoElement = document.createElement("details");
+            const diasTrabajoSummary = document.createElement("summary");
+            diasTrabajoSummary.textContent = `Días trabajados: ${data.dias_trabajados}`;
+            diasTrabajoElement.appendChild(diasTrabajoSummary);
+            
+            data.fechas_asignadas.forEach(fecha => {
+                const p = document.createElement("p");
+                p.textContent = fecha;
+                diasTrabajoElement.appendChild(p);
+            });
+            card.appendChild(diasTrabajoElement);
+
+            // Días de descanso (desplegable)
+            const diasDescansoElement = document.createElement("p");
+            diasDescansoElement.textContent = `Días de descanso: ${data.dias_descanso}`;
+            card.appendChild(diasDescansoElement);
+
+            // Horas trabajadas
+            const horasTrabajadasElement = document.createElement("p");
+            horasTrabajadasElement.textContent = `Horas trabajadas: ${data.horas_trabajadas}`;
+            card.appendChild(horasTrabajadasElement);
+
+            // Turnos (desplegable)
+            const turnosElement = document.createElement("details");
+            const turnosSummary = document.createElement("summary");
+            turnosSummary.textContent = "Turnos Asignados";
+            turnosElement.appendChild(turnosSummary);
+
+            data.turnos.forEach(turno => {
+                const p = document.createElement("p");
+                p.textContent = turno;
+                turnosElement.appendChild(p);
+            });
+            card.appendChild(turnosElement);
+
+            // Agregar tarjeta al contenedor
+            employeeCardsContainer.appendChild(card);
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

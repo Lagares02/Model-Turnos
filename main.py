@@ -3,6 +3,7 @@ from config import settings
 from datetime import datetime
 from logic.turn_taking_logic import AsignadorTurnos
 import json
+import random
 
 app = Flask(__name__)
 
@@ -59,7 +60,8 @@ def generar_cronograma():
         with open('config/cajeros.json', 'r') as f:
             cajeras = json.load(f)["cajeros"]  # Cargar los cajeros desde el archivo JSON
         
-        asignador = AsignadorTurnos(cajeras, tipo_periodo)
+        cajeras_aleatorias = random.sample(cajeras, len(cajeras))
+        asignador = AsignadorTurnos(cajeras_aleatorias, tipo_periodo)
         fecha = datetime.strptime(fecha_inicio, '%Y-%m-%d')
         
         # Asignar los turnos para el tipo de periodo seleccionado

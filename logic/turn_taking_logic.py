@@ -34,7 +34,7 @@ class AsignadorTurnos:
             tipo_cronograma (str): Tipo de cronograma ('mes' o 'semana').
         """
         self.tipo_cronograma = tipo_cronograma
-        self.dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        self.dias_semana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
         self.cajeras_info = {
             nombre: {
                 'dias_repetidos': [],
@@ -205,31 +205,3 @@ class AsignadorTurnos:
             print(c)
             for k,v in info.items():
                 print(f"   {k}: {v}")
-
-# test de la clase ----------------------------------------------------------------------
-
-"""n = N_CAJERAS  # Número de cajeras
-cajeras = CAJEROS
-
-# Crear una instancia del asignador de turnos
-asignador = AsignadorTurnos(cajeras,"mes")
-
-fecha = datetime(2024, 2, 1)  # Ejemplo de fecha
-
-# Asignar los turnos para el tipo de periodo selecionado 
-asignador.asignar_turnos(fecha)
-
-# Mostrar el cronograma
-asignador.mostrar_cronograma()
-
-print()
-
-# Crear una instancia del asignador de turnos
-asignador = AsignadorTurnos(cajeras,"semana")
-
-fecha = datetime(2024, 9, 2)  # Ejemplo de fecha
-# Asignar los turnos para el tipo de periodo selecionado 
-asignador.asignar_turnos(fecha)
-
-# Mostrar el cronograma
-asignador.mostrar_cronograma()"""
