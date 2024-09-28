@@ -161,47 +161,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarCronogramas();
 
-    // Función para filtrar cronogramas y mostrarlos en la lista
+    // Función para filtrar los cronogramas generados
     function filtrarCronogramas() {
-        const filtroTipo = document.getElementById('filtroTipo').value.trim(); // Obtener el valor del filtro de tipo
-        const filtroFechaInicio = document.getElementById('fechaInicioFiltro').value; // Obtener el valor del filtro de fecha
-
+        const filtroTipo = document.getElementById("filtroTipo").value;
+        const fechaInicioFiltro = document.getElementById("fechaInicioFiltro").value;
+        const listaCronogramas = document.getElementById("listaCronogramas");
+    
+        // Obtener los cronogramas del backend
         fetch('/api/cronogramas')
-            .then(response => response.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    // Aplicar el filtro
-                    const cronogramasFiltrados = data.filter(cronograma => {
-                        let coincideTipo = true;
-                        let coincideFecha = true;
-
-                        // Verificar si se aplicó el filtro de tipo
-                        if (filtroTipo) {
-                            coincideTipo = cronograma.tipo.toLowerCase() === filtroTipo.toLowerCase();
-                        }
-
-                        // Verificar si se aplicó el filtro de fecha
-                        if (filtroFechaInicio) {
-                            // Convertir las fechas para comparar
-                            const fechaCronograma = new Date(cronograma.fecha).toISOString().split('T')[0];
-                            coincideFecha = fechaCronograma >= filtroFechaInicio;
-                        }
-
-                        // Retornar true solo si ambos filtros coinciden
-                        return coincideTipo && coincideFecha;
-                    });
-
-                    // Mostrar los cronogramas filtrados
-                    mostrarCronogramas(cronogramasFiltrados);
-                } else {
-                    console.error('Formato de datos incorrecto:', data);
-                }
-            })
-            .catch(error => console.error('Error al cargar cronogramas:', error));
+        .then(response => response.json())
+        .then(cronogramas => {
+            // Filtrar los cronogramas según el tipo y la fecha de inicio
+            const filteredCronogramas = cronogramas.filter(cron => {
+            const tipoCoincide = filtroTipo === "" || cron.tipo === filtroTipo;
+            const fechaCoincide = fechaInicioFiltro === "" || cron.cronogramas.dia_1.fecha >= fechaInicioFiltro;
+    
+            return tipoCoincide && fechaCoincide;
+            });
+    
+            // Mostrar los cronogramas filtrados
+            mostrarCronogramas(filteredCronogramas);
+        });
     }
 
-    // Asignar la función de filtro al botón de filtrado
-    document.getElementById('filtrarCronogramas').addEventListener('click', filtrarCronogramas);
+    window.onload = function() {
+        // Asignar la función de filtro al botón de filtrado
+        document.getElementById('filtrarCronogramas').addEventListener('click', filtrarCronogramas);
+    }
 
     // Lógica para agregar un nuevo empleado
     document.getElementById("agregarEmpleado").addEventListener("click", () => {

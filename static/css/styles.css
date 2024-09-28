@@ -76,7 +76,7 @@ button {
 }
 
 button:hover {
-    background-color: var(--blue);
+    background-color: rgb(0, 0, 63);
 }
 
 .btn-filtro {
@@ -301,5 +301,5 @@ label {
 }
 
 .ver-detalles:hover {
-    color: blue; /* Color al hacer hover */
+    color: rgb(0, 0, 63); /* Color al hacer hover */
 }
