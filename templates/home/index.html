@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turnos Megatiendas</title>
-    <link rel="shortcut icon" href="https://genfavicon.com/tmp/icon_bf3752cc5bef0bbab6a88b65be0adb8f.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <div class="container">
@@ -24,21 +24,25 @@
 
             <div class="gestion-cronogramas">
                 <h2>Generación de Cronogramas</h2>
-                <p>Deberías crear un cronograma en 7 días, ya sea semanal o mensual.</p>
+
+                <div class="parrafo">
+                    <i class="bi bi-info-circle informacion"></i>
+                    <p>Preferiblemente genere los cronograma un domingo o fin de mes</p>
+                </div>
+
                 <div class="fs">
                     <select class="form-select" id="tipoTurnoSelect">
                         <option selected>Seleccione el tipo de turno</option>
-                        <option value="1">Semanal</option>
-                        <option value="2">Mensual</option>
+                        <option value="semana">Semanal</option>
+                        <option value="mes">Mensual</option>
                     </select>
                 </div>
                 
+                <div>
+                    <label for="fechaInicio">Fecha de inicio</label>
+                </div>
                 <div class="fs">
                     <input type="date" id="fechaInicio" placeholder="Fecha de inicio">
-                </div>
-                
-                <div class="fs">
-                    <input type="date" id="fechaFin" placeholder="Fecha de fin">
                 </div>
 
                 <div class="generarCrono">
@@ -52,13 +56,15 @@
             <h2>Cronogramas Generados</h2>
 
             <div class="filtros-cronogramas">
-                <input type="date" id="fechaInicioFiltro" placeholder="Fecha de inicio filtro">
-                <input type="date" id="fechaFinFiltro" placeholder="Fecha de fin filtro">
                 <select id="filtroTipo">
                     <option value="">Filtrar por tipo</option>
                     <option value="semanal">Semanal</option>
                     <option value="mensual">Mensual</option>
                 </select>
+
+                <input type="date" id="fechaInicioFiltro" placeholder="Fecha de inicio filtro">
+
+                <button id="filtrarCronogramas" class="btn-filtro">Filtrar</button>
             </div>
 
             <div class="lista-cronogramas" id="listaCronogramas">

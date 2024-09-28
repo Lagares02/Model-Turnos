@@ -1,0 +1,17 @@
+<!-- templates/cronogramas/cronogramas_semana.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma de Semana</title>
+    <!-- Añadir estilos y scripts necesarios aquí -->
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles del Cronograma de Semana (ID: {{ cronograma.id }})</h1>
+        <pre>{{ cronograma | tojson(indent=4) }}</pre>
+        <!-- Aquí se mostrarán los detalles del cronograma -->
+    </div>
+</body>
+</html>

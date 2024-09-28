@@ -6,8 +6,11 @@
     /* Azul */
     --blue: #164094b9;
 
-    /* Azul */
+    /* Azul suave */
     --blueslow: #EDF2F4;
+
+    /* Verde */
+    --green: rgba(130, 207, 130, 0.897);
 }
 
 
@@ -64,7 +67,7 @@ select, input[type="date"], button {
 }
 
 button {
-    background-color: var(--red);
+    background-color: var(--blue);
     color: white;
     padding: 10px;
     border: none;
@@ -73,7 +76,16 @@ button {
 }
 
 button:hover {
-    background-color: var(--red);
+    background-color: var(--blue);
+}
+
+.btn-filtro {
+    background-color: var(--blue);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 120px;
 }
 
 /* Estilos para la fila 2: Cronogramas Generados */
@@ -134,12 +146,12 @@ button:hover {
     }
 }
 
-.lista-empleados div, .lista-cronogramas div, .lista-cronogramas-generados div {
+.lista-empleados div {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 10px;
-    background-color: var(--blue);
+    background-color: var(--blueslow);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -154,6 +166,11 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+label {
+    padding: 10px;
+    font-size: 12px; /* Tamaño de fuente pequeño */
 }
 
 .fst {
@@ -181,17 +198,17 @@ button:hover {
     background: white;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgb(252, 169, 169);
+    background: rgba(70, 70, 199, 0.274);
     border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #D90429;
+    background: var(--blue);
 }
 
 /* Estilo para el icono de eliminación */
 .eliminar-empleado {
     cursor: pointer;
-    color: rgba(255, 0, 0, 0.801); /* Color rojo para indicar eliminación */
+    color: var(--red); /* Color rojo para indicar eliminación */
     display: inline-flex; /* Ajustar tamaño */
     align-items: center; /* Centrar verticalmente */
     padding: 0;
@@ -200,4 +217,89 @@ button:hover {
 
 .eliminar-empleado:hover {
     color: darkred; /* Cambiar color al pasar el ratón */
+}
+
+/* Estilo para el icono de eliminación */
+.eliminar-cronograma {
+    cursor: pointer;
+    color: var(--red); /* Color rojo para indicar eliminación */
+    position: absolute; /* Posicionar en relación con el contenedor */
+    top: 10px; /* Ajustar la posición desde la parte superior */
+    right: 10px; /* Ajustar la posición desde la derecha */
+    padding: 0;
+}
+
+.eliminar-cronograma:hover {
+    color: darkred; /* Cambiar color al pasar el ratón */
+}
+
+.parrafo {
+    padding: 10px; /* Aumentar el padding */
+    border-radius: 10px;
+    background-color: var(--green);
+    position: relative;
+    display: flex; /* Usar flexbox para alinear el icono y el texto */
+    align-items: center; /* Centrar verticalmente el contenido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.447); /* Sombra */
+    margin-bottom: 10px;
+}
+
+.informacion {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 20px; /* Aumentar tamaño del icono si es necesario */
+    color: white; /* Color del icono */
+}
+
+.parrafo p {
+    margin: 0; /* Eliminar margen del párrafo */
+    color: white; /* Color del texto */
+    font-size: 16px; /* Tamaño de texto del párrafo */
+}
+
+/* Estilos para la tarjeta */
+.card {
+    position: relative;
+    background-color: var(--blueslow) ; /* Forzar fondo blanco */
+    border: 1px solid #cccccc; /* Borde simple */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.418); /* Sombra ligera */
+    padding: 20px; /* Espaciado interno */
+    width: 120px; /* Ajustar tamaño */
+}
+
+/* Forzar color de fondo del contenedor padre si es necesario */
+.lista-cronogramas {
+    background-color: transparent !important; /* Fondo transparente o blanco */
+    padding: 10px;
+}
+
+/* Flexbox para alinear ID y Tipo */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: start; /* Alinear los elementos a la izquierda */
+    gap: 10px;
+}
+
+/* Estilos para el título */
+.card-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Estilos para el texto */
+.card-text {
+    margin: 0;
+    font-size: 15px;
+}
+
+.ver-detalles {
+    margin-top: 10px;
+    color: var(--blue); /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
+}
+
+.ver-detalles:hover {
+    color: blue; /* Color al hacer hover */
 }

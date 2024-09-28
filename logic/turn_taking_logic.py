@@ -132,6 +132,8 @@ class AsignadorTurnos:
             self.dias_asignados = dias_a_asignar
         else:
             dias_a_asignar = 7
+            
+        cronograma_dias = {}
         
         for dia in range(dias_a_asignar):
             turnos_dia = {turno: [] for turno in self.turnos_por_dia}
@@ -175,13 +177,19 @@ class AsignadorTurnos:
                         self.cajeras_info[empleado]["dias_consecutivos"] = 1
 
                     self.cajeras_info[empleado]['ultimo_dia'] = dia
-
-            
+                    
+                    cronograma_dia_clave = f"dia_{dia + 1}"
+                    cronograma_dias[cronograma_dia_clave] = {
+                        "fecha": (fecha + timedelta(days=dia)).strftime('%Y-%m-%d'),
+                        "turnos": turnos_dia
+                    }
+                            
             self.cronograma.append(turnos_dia)
             
             for empleado in self.cajeras_info.keys():
                 self.cajeras_info[empleado]["dias_descanso"] = dias_a_asignar - self.cajeras_info[empleado]["dias_trabajados"]
-
+                
+        return cronograma_dias, self.cajeras_info
 
     def mostrar_cronograma(self):
         print(f"CRONOGRAMA {self.tipo_cronograma}")
@@ -200,7 +208,7 @@ class AsignadorTurnos:
 
 # test de la clase ----------------------------------------------------------------------
 
-n = N_CAJERAS  # Número de cajeras
+"""n = N_CAJERAS  # Número de cajeras
 cajeras = CAJEROS
 
 # Crear una instancia del asignador de turnos
@@ -224,4 +232,4 @@ fecha = datetime(2024, 9, 2)  # Ejemplo de fecha
 asignador.asignar_turnos(fecha)
 
 # Mostrar el cronograma
-asignador.mostrar_cronograma()
+asignador.mostrar_cronograma()"""
