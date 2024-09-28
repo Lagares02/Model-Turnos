@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="card-body">
                     <h5 class="card-title">ID: ${cron.id}</h5>
                     <p class="card-text">Tipo: ${tipoCronograma}</p>
+                    <p class="card-text">Fecha inicial: ${cron.cronogramas.dia_1.fecha}</p>
                     <a href="/cronogramas/${cron.tipo}/${cron.id}" class="ver-detalles">Ver Detalles</a>
                 </div>
             </div>`;
@@ -184,8 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Asignar la función de filtro al botón de filtrado
     window.onload = function() {
-        // Asignar la función de filtro al botón de filtrado
         document.getElementById('filtrarCronogramas').addEventListener('click', filtrarCronogramas);
     }
 
