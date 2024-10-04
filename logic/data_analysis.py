@@ -215,3 +215,58 @@ for tipo_dia, datos in metrics.items():
     print("Proporciones de facturas por turno:")
     print(datos['proporciones'])
     print()
+    
+# Graficas
+
+# Promedio de facturas por turnos en días normales
+promedio_facturas_dias_normales = {
+    '6-7': 9857.0, '7-8': 13910.5, '8-9': 15687.5, '9-10': 16796.5,
+    '10-11': 16748.0, '11-12': 16942.5, '12-13': 14952.0, '13-14': 11356.0,
+    '14-15': 10593.5, '15-16': 10975.5, '16-17': 11868.0, '17-18': 12120.0,
+    '18-19': 9609.5, '19-20': 4323.5
+}
+
+# Promedio de facturas por turnos en días de mayor demanda
+promedio_facturas_mayor_demanda = {
+    '6-7': 10746.0, '7-8': 15758.5, '8-9': 18288.5, '9-10': 19495.5,
+    '10-11': 19044.0, '11-12': 18915.0, '12-13': 16866.0, '13-14': 12993.5,
+    '14-15': 11844.5, '15-16': 12258.5, '16-17': 13106.5, '17-18': 13309.5,
+    '18-19': 11010.0, '19-20': 5346.5
+}
+
+# Extraer turnos
+turnos = list(promedio_facturas_dias_normales.keys())
+
+# Extraer promedios
+facturas_normales = list(promedio_facturas_dias_normales.values())
+facturas_mayor_demanda = list(promedio_facturas_mayor_demanda.values())
+
+print("Generando gráfica...")
+
+# Crear gráfico
+plt.figure(figsize=(10, 6))
+
+# Graficar datos de días normales
+plt.plot(turnos, facturas_normales, label='Días Normales', marker='o', color='blue')
+
+# Graficar datos de días de mayor demanda
+plt.plot(turnos, facturas_mayor_demanda, label='Días de Mayor Demanda', marker='o', color='orange')
+
+# Dibujar líneas para las franjas horarias
+plt.axvline(x='6-7', color='purple', linestyle='--', label='Apertura')
+plt.axvline(x='12-13', color='blue', linestyle='--', label='Cierre (Tarde)')
+plt.axvline(x='8-9', color='green', linestyle='--', label='Partido 1')
+plt.axvline(x='16-17', color='green', linestyle='--', label='Partido 2')
+plt.axvline(x='17-18', color='blue', linestyle='--')
+plt.axvline(x='19-20', color='green', linestyle='--')
+
+# Etiquetas y título
+plt.xlabel('Turnos')
+plt.ylabel('Promedio de Facturas')
+plt.title('Comparación de Promedio de Facturas por Turno con Franjas Horarias')
+plt.xticks(rotation=45)
+plt.legend()
+
+# Mostrar gráfico
+plt.tight_layout()
+plt.show()

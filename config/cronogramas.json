@@ -2673,6 +2673,635 @@
                     ]
                 }
             }
+        },
+        {
+            "id": 3,
+            "tipo": "semana",
+            "cronogramas": {
+                "dia_1": {
+                    "fecha": "2024-12-01",
+                    "turnos": {
+                        "Apertura": [
+                            "HERRERA PARRA NORIS ELENA",
+                            "PADILLA DICSON EMI LUZ",
+                            "GARCIA VALVERDE MARYURIS ANDREA",
+                            "PINEDA CHAMORRO CARLOS ALBERTO",
+                            "RAMOS JIMENEZ ARENEY PRICSILIA"
+                        ],
+                        "Partido": [
+                            "MARRUGO CABANA DERLYS",
+                            "MEDINA MESINO NATALIA YEILETH",
+                            "DE PAOLA BALMACEDA ELVIA BEATRIZ",
+                            "ZUNIGA PENALOZA YINA KATHERINE"
+                        ],
+                        "Cierre": [
+                            "REALES DE HOYOS GISELLA",
+                            "VIANA COSTA CARMEN ELENA",
+                            "CARDALES HURTADO DAYSI PAOLA"
+                        ]
+                    }
+                },
+                "dia_2": {
+                    "fecha": "2024-12-02",
+                    "turnos": {
+                        "Apertura": [
+                            "SARABIA BARRERA ENER FRANCISCAS",
+                            "VILLA VANEGAS GLENIA TERESA",
+                            "CABARCAS MOSQUERA YESENIA MARIA",
+                            "PAJARO YEPEZ ANA MILENA",
+                            "HERRERA PARRA NORIS ELENA"
+                        ],
+                        "Partido": [
+                            "PADILLA DICSON EMI LUZ",
+                            "GARCIA VALVERDE MARYURIS ANDREA",
+                            "PINEDA CHAMORRO CARLOS ALBERTO",
+                            "RAMOS JIMENEZ ARENEY PRICSILIA"
+                        ],
+                        "Cierre": [
+                            "MARRUGO CABANA DERLYS",
+                            "MEDINA MESINO NATALIA YEILETH",
+                            "DE PAOLA BALMACEDA ELVIA BEATRIZ"
+                        ]
+                    }
+                },
+                "dia_3": {
+                    "fecha": "2024-12-03",
+                    "turnos": {
+                        "Apertura": [
+                            "ZUNIGA PENALOZA YINA KATHERINE",
+                            "REALES DE HOYOS GISELLA",
+                            "VIANA COSTA CARMEN ELENA",
+                            "CARDALES HURTADO DAYSI PAOLA",
+                            "SARABIA BARRERA ENER FRANCISCAS"
+                        ],
+                        "Partido": [
+                            "VILLA VANEGAS GLENIA TERESA",
+                            "CABARCAS MOSQUERA YESENIA MARIA",
+                            "PAJARO YEPEZ ANA MILENA",
+                            "HERRERA PARRA NORIS ELENA"
+                        ],
+                        "Cierre": [
+                            "PADILLA DICSON EMI LUZ",
+                            "GARCIA VALVERDE MARYURIS ANDREA",
+                            "PINEDA CHAMORRO CARLOS ALBERTO"
+                        ]
+                    }
+                },
+                "dia_4": {
+                    "fecha": "2024-12-04",
+                    "turnos": {
+                        "Apertura": [
+                            "ZUNIGA PENALOZA YINA KATHERINE",
+                            "REALES DE HOYOS GISELLA",
+                            "VIANA COSTA CARMEN ELENA",
+                            "CARDALES HURTADO DAYSI PAOLA",
+                            "RAMOS JIMENEZ ARENEY PRICSILIA"
+                        ],
+                        "Partido": [
+                            "MARRUGO CABANA DERLYS",
+                            "MEDINA MESINO NATALIA YEILETH",
+                            "DE PAOLA BALMACEDA ELVIA BEATRIZ",
+                            "SARABIA BARRERA ENER FRANCISCAS"
+                        ],
+                        "Cierre": [
+                            "VILLA VANEGAS GLENIA TERESA",
+                            "CABARCAS MOSQUERA YESENIA MARIA",
+                            "PAJARO YEPEZ ANA MILENA"
+                        ]
+                    }
+                },
+                "dia_5": {
+                    "fecha": "2024-12-05",
+                    "turnos": {
+                        "Apertura": [
+                            "RAMOS JIMENEZ ARENEY PRICSILIA",
+                            "MARRUGO CABANA DERLYS",
+                            "MEDINA MESINO NATALIA YEILETH",
+                            "DE PAOLA BALMACEDA ELVIA BEATRIZ",
+                            "ZUNIGA PENALOZA YINA KATHERINE"
+                        ],
+                        "Partido": [
+                            "REALES DE HOYOS GISELLA",
+                            "VIANA COSTA CARMEN ELENA",
+                            "CARDALES HURTADO DAYSI PAOLA",
+                            "HERRERA PARRA NORIS ELENA"
+                        ],
+                        "Cierre": [
+                            "PADILLA DICSON EMI LUZ",
+                            "GARCIA VALVERDE MARYURIS ANDREA",
+                            "PINEDA CHAMORRO CARLOS ALBERTO"
+                        ]
+                    }
+                },
+                "dia_6": {
+                    "fecha": "2024-12-06",
+                    "turnos": {
+                        "Apertura": [
+                            "SARABIA BARRERA ENER FRANCISCAS",
+                            "VILLA VANEGAS GLENIA TERESA",
+                            "CABARCAS MOSQUERA YESENIA MARIA",
+                            "PAJARO YEPEZ ANA MILENA",
+                            "HERRERA PARRA NORIS ELENA"
+                        ],
+                        "Partido": [
+                            "PADILLA DICSON EMI LUZ",
+                            "GARCIA VALVERDE MARYURIS ANDREA",
+                            "PINEDA CHAMORRO CARLOS ALBERTO",
+                            "RAMOS JIMENEZ ARENEY PRICSILIA"
+                        ],
+                        "Cierre": [
+                            "MARRUGO CABANA DERLYS",
+                            "MEDINA MESINO NATALIA YEILETH",
+                            "DE PAOLA BALMACEDA ELVIA BEATRIZ"
+                        ]
+                    }
+                },
+                "dia_7": {
+                    "fecha": "2024-12-07",
+                    "turnos": {
+                        "Apertura": [
+                            "SARABIA BARRERA ENER FRANCISCAS",
+                            "VILLA VANEGAS GLENIA TERESA",
+                            "CABARCAS MOSQUERA YESENIA MARIA",
+                            "PAJARO YEPEZ ANA MILENA",
+                            "ZUNIGA PENALOZA YINA KATHERINE"
+                        ],
+                        "Partido": [
+                            "REALES DE HOYOS GISELLA",
+                            "VIANA COSTA CARMEN ELENA",
+                            "CARDALES HURTADO DAYSI PAOLA",
+                            "HERRERA PARRA NORIS ELENA"
+                        ],
+                        "Cierre": [
+                            "PADILLA DICSON EMI LUZ",
+                            "GARCIA VALVERDE MARYURIS ANDREA",
+                            "PINEDA CHAMORRO CARLOS ALBERTO"
+                        ]
+                    }
+                }
+            },
+            "informe": {
+                "HERRERA PARRA NORIS ELENA": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        3,
+                        5,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 42,
+                    "dias_trabajados": 6,
+                    "dias_descanso": 1,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Apertura",
+                        "Partido",
+                        "Partido",
+                        "Apertura",
+                        "Partido"
+                    ]
+                },
+                "PADILLA DICSON EMI LUZ": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        3,
+                        5,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 40,
+                    "dias_trabajados": 6,
+                    "dias_descanso": 1,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Cierre",
+                        "Cierre",
+                        "Partido",
+                        "Cierre"
+                    ]
+                },
+                "GARCIA VALVERDE MARYURIS ANDREA": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        3,
+                        5,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 40,
+                    "dias_trabajados": 6,
+                    "dias_descanso": 1,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Cierre",
+                        "Cierre",
+                        "Partido",
+                        "Cierre"
+                    ]
+                },
+                "PINEDA CHAMORRO CARLOS ALBERTO": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        3,
+                        5,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 40,
+                    "dias_trabajados": 6,
+                    "dias_descanso": 1,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Cierre",
+                        "Cierre",
+                        "Partido",
+                        "Cierre"
+                    ]
+                },
+                "RAMOS JIMENEZ ARENEY PRICSILIA": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        4,
+                        5,
+                        6
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 5,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Apertura",
+                        "Apertura",
+                        "Partido"
+                    ]
+                },
+                "MARRUGO CABANA DERLYS": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        4,
+                        5,
+                        6
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 5,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)"
+                    ],
+                    "turnos": [
+                        "Partido",
+                        "Cierre",
+                        "Partido",
+                        "Apertura",
+                        "Cierre"
+                    ]
+                },
+                "MEDINA MESINO NATALIA YEILETH": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        4,
+                        5,
+                        6
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 5,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)"
+                    ],
+                    "turnos": [
+                        "Partido",
+                        "Cierre",
+                        "Partido",
+                        "Apertura",
+                        "Cierre"
+                    ]
+                },
+                "DE PAOLA BALMACEDA ELVIA BEATRIZ": {
+                    "dias_repetidos": [
+                        1,
+                        2,
+                        4,
+                        5,
+                        6
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 3,
+                    "ultimo_dia": 5,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-02(lunes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-06(viernes)"
+                    ],
+                    "turnos": [
+                        "Partido",
+                        "Cierre",
+                        "Partido",
+                        "Apertura",
+                        "Cierre"
+                    ]
+                },
+                "ZUNIGA PENALOZA YINA KATHERINE": {
+                    "dias_repetidos": [
+                        1,
+                        3,
+                        4,
+                        5,
+                        7
+                    ],
+                    "horas_trabajadas": 32,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 1,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Partido",
+                        "Apertura",
+                        "Apertura",
+                        "Apertura",
+                        "Apertura"
+                    ]
+                },
+                "REALES DE HOYOS GISELLA": {
+                    "dias_repetidos": [
+                        1,
+                        3,
+                        4,
+                        5,
+                        7
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 1,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Cierre",
+                        "Apertura",
+                        "Apertura",
+                        "Partido",
+                        "Partido"
+                    ]
+                },
+                "VIANA COSTA CARMEN ELENA": {
+                    "dias_repetidos": [
+                        1,
+                        3,
+                        4,
+                        5,
+                        7
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 1,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Cierre",
+                        "Apertura",
+                        "Apertura",
+                        "Partido",
+                        "Partido"
+                    ]
+                },
+                "CARDALES HURTADO DAYSI PAOLA": {
+                    "dias_repetidos": [
+                        1,
+                        3,
+                        4,
+                        5,
+                        7
+                    ],
+                    "horas_trabajadas": 34,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 1,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-01(domingo)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-05(jueves)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Cierre",
+                        "Apertura",
+                        "Apertura",
+                        "Partido",
+                        "Partido"
+                    ]
+                },
+                "SARABIA BARRERA ENER FRANCISCAS": {
+                    "dias_repetidos": [
+                        2,
+                        3,
+                        4,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 32,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 2,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Apertura",
+                        "Partido",
+                        "Apertura",
+                        "Apertura"
+                    ]
+                },
+                "VILLA VANEGAS GLENIA TERESA": {
+                    "dias_repetidos": [
+                        2,
+                        3,
+                        4,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 32,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 2,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Cierre",
+                        "Apertura",
+                        "Apertura"
+                    ]
+                },
+                "CABARCAS MOSQUERA YESENIA MARIA": {
+                    "dias_repetidos": [
+                        2,
+                        3,
+                        4,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 32,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 2,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Cierre",
+                        "Apertura",
+                        "Apertura"
+                    ]
+                },
+                "PAJARO YEPEZ ANA MILENA": {
+                    "dias_repetidos": [
+                        2,
+                        3,
+                        4,
+                        6,
+                        7
+                    ],
+                    "horas_trabajadas": 32,
+                    "dias_trabajados": 5,
+                    "dias_descanso": 2,
+                    "dias_consecutivos": 2,
+                    "ultimo_dia": 6,
+                    "fechas_asignadas": [
+                        "2024-12-02(lunes)",
+                        "2024-12-03(martes)",
+                        "2024-12-04(miÃ©rcoles)",
+                        "2024-12-06(viernes)",
+                        "2024-12-07(sÃ¡bado)"
+                    ],
+                    "turnos": [
+                        "Apertura",
+                        "Partido",
+                        "Cierre",
+                        "Apertura",
+                        "Apertura"
+                    ]
+                }
+            }
         }
     ]
 }
