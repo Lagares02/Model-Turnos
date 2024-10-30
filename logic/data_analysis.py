@@ -1,21 +1,18 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-
-import random
+import seaborn as sns
 import sys
 import os
+import pprint
 
 # Añadir el directorio raíz del proyecto al PYTHONPATH
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from config.settings import DATASET, TURNOS, N_CAJERAS
+from config.settings import DATASET, TURNOS, N_CAJERAS, DOMINGOS
 
 # Cargar datos desde el archivo CSV
 df = pd.read_csv(DATASET, delimiter=';')
-
-print(df.info())
 
 # Convertir columnas de fecha y hora en un solo campo de tipo datetime
 df['datetime'] = pd.to_datetime(df['fecha'] + ' ' + df['Hora'], dayfirst=True, errors='coerce')
@@ -27,168 +24,71 @@ if df['datetime'].isnull().any():
 # Filtrar filas donde la conversión fue exitosa
 df = df[df['datetime'].notna()]
 
-# Asegurarse de que la conversión fue correcta
-print(df['datetime'].dtype)
+# Conversión de columnas
+df['cantidad_numeric'] = df['cantidad'].str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+df['unidades_kilo'] = df['cantidad_numeric'] / 1000  # Conversión de cantidad a unidades kilo
+df['month'] = df['datetime'].dt.month
+df['day_of_month'] = df['datetime'].dt.day
+df['hour'] = df['datetime'].dt.hour
+print(f"\n{df.head(10)}\n")
 
-def promedio_ventas_por_hora(df, turnos):
-    """
-    Calcula y grafica el promedio de ventas por hora.
+print(f"---------------------------------------------------- DESCRIBE ----------------------------------------------------\n{df.describe()}\n------------------------------------------------------------------------------------------------------------------")
 
-    Parámetros:
-    -----------
-    df : pd.DataFrame
-        DataFrame que contiene los datos de ventas. Debe incluir una columna 'datetime' y 'vlr_neto'.
-    turnos : dict
-        Diccionario con los turnos de trabajo. Las claves son los nombres de los turnos y los valores son tuplas (inicio, fin).
-
-    Retorna:
-    --------
-    pd.Series
-        Serie de Pandas con las horas como índice y el promedio de ventas (vlr_neto) por hora.
-
-    Ejemplo:
-    --------
-    >>> promedio_ventas_por_hora(df, TURNOS)
-    hour
-    7     15000.00
-    8     20000.00
-    9     18000.00
-    10    22000.00
-    dtype: float64
-    """
-    df['hour'] = df['datetime'].dt.hour
-    promedio_ventas_por_hora = df.groupby('hour')['vlr_neto'].mean()
-
-    # Graficar el promedio de ventas por hora
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.bar(promedio_ventas_por_hora.index, promedio_ventas_por_hora.values, color='blue')
-    ax.yaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.2f}'))
-    ax.set_title('Promedio de Ventas por Hora')
-    ax.set_xlabel('Hora')
-    ax.set_ylabel('Promedio de Ventas')
-
-    # Líneas divisorias para los turnos
-    for turno, (inicio, fin) in turnos.items():
-        ax.axvline(inicio - 0.5, color='red', linestyle='--', label=f'Inicio {turno.capitalize()}' if inicio == 7 else "")
-        ax.axvline(fin + 0.5, color='red', linestyle='--')
-
-    ax.legend()
-    plt.tight_layout()
-    plt.show()
-
-    return promedio_ventas_por_hora
-
-def promedio_ventas_por_semana(df):
-    """
-    Calcula el promedio de ventas por semana y mes.
-
-    Parámetros:
-    -----------
-    df : pd.DataFrame
-        DataFrame que contiene los datos de ventas. Debe incluir una columna 'datetime' y 'vlr_neto'.
-
-    Retorna:
-    --------
-    dict
-        Diccionario con el promedio de ventas por semana para cada mes. La clave es el mes/año y el valor es otro diccionario
-        con el rango de fechas de la semana como clave y el promedio de ventas como valor.
-
-    Ejemplo:
-    --------
-    >>> promedio_ventas_por_semana(df)
-    {
-        '2023-07': {
-            '01-Jul - 07-Jul': 15000.00,
-            '08-Jul - 14-Jul': 17000.00
-        },
-        '2023-08': {
-            '01-Aug - 07-Aug': 18000.00,
-            '08-Aug - 14-Aug': 16000.00
-        }
-    }
-    """
-    df['week'] = df['datetime'].dt.isocalendar().week
-    df['year_month'] = df['datetime'].dt.to_period('M').astype(str)
-
-    promedio_por_semana_mes = {}
-    for mes_año in sorted(df['year_month'].unique(), key=lambda x: pd.to_datetime(x, format='%Y-%m')):
-        df_mes = df[df['year_month'] == mes_año]
-        semanas_promedio = {}
-        
-        for semana in df_mes['week'].unique():
-            df_semana = df_mes[df_mes['week'] == semana]
-            fecha_inicio = df_semana['datetime'].min().strftime('%d-%b')
-            fecha_fin = df_semana['datetime'].max().strftime('%d-%b')
-            rango_fechas = f'{fecha_inicio} - {fecha_fin}'
-            promedio_ventas_semana = df_semana['vlr_neto'].mean()
-            semanas_promedio[rango_fechas] = promedio_ventas_semana
-        
-        promedio_por_semana_mes[mes_año] = semanas_promedio
-
-    return promedio_por_semana_mes
-
-
+# Función para obtener métricas y proporciones
 def obtener_metricas_y_proporcion(df, turnos, total_cajeras_disponibles):
     """
-    Calcula las métricas de promedio de facturas por hora y por turnos, tanto para días normales como de mayor demanda,
-    y luego asigna cajas disponibles en función de la proporción de facturas por turno.
-
-    Parámetros:
-    -----------
-    df : pd.DataFrame
-        DataFrame que contiene los datos de facturación. Debe incluir una columna 'datetime' y 'documento'.
-    turnos : dict
-        Diccionario con los turnos de trabajo. Las claves son los nombres de los turnos y los valores son tuplas (inicio, fin).
-    total_cajeras_disponiblles : int
-        El número total de cajas disponibles para asignar entre los turnos.
-
-    Retorna:
-    --------
-    dict
-        Diccionario con las métricas de promedio de facturas por hora y por turnos, separadas por días normales y días de mayor demanda.
-    dict
-        Diccionario con los turnos como claves y el número de cajas asignadas a cada turno como valores.
-    dict
-        Diccionario con los turnos como claves y la proporción de facturas de cada turno como valores.
+    # Calcular el promedio de unidades kilo por día
+    promedio_unidades_kilo_dia = (df.groupby('day_of_month')['unidades_kilo'].sum())
     """
-    
-    # Días del mes considerados como de mayor demanda (independiente del mes o año)
-    #dias_mayor_demanda = {1, 2, 3, 14, 15, 16, 17, 18, 27, 28, 29}
-    dias_mayor_demanda = {1, 2, 3, 4, 5, 6, 15, 16, 17, 18, 19, 20, 27, 28, 29}
-    
-    # Agregar columnas adicionales para el análisis
-    df['date'] = df['datetime'].dt.date
-    df['day_of_month'] = df['datetime'].dt.day
-    df['hour'] = df['datetime'].dt.hour
+    # Agrupamos por mes y día para obtener la suma de unidades kilo de cada día en cada mes
+    suma_unidades_kilo_por_dia_y_mes = df.groupby(['month', 'day_of_month'])['unidades_kilo'].sum()
+
+    # Calculo el promedio de las sumas de cada día del mes (como si fuese 1 mes)
+    promedio_unidades_kilo_dia = suma_unidades_kilo_por_dia_y_mes.groupby('day_of_month').mean()
+
+    # Calcular el umbral
+    umbral = promedio_unidades_kilo_dia.mean()
+
+    # Identificar días de mayor demanda (por encima del umbral)
+    dias_mayor_demanda = promedio_unidades_kilo_dia[promedio_unidades_kilo_dia > umbral].index
+
+    # Asignar el tipo de día (mayor demanda o normal)
     df['tipo_dia'] = df['day_of_month'].apply(lambda x: 'mayor_demanda' if x in dias_mayor_demanda else 'normal')
 
     metrics = {}
     
+    df = df.dropna(subset=['Hora'])
+
     # Cálculo de métricas por tipo de día
     for tipo_dia in ['normal', 'mayor_demanda']:
         df_tipo_dia = df[df['tipo_dia'] == tipo_dia]
-        facturas_por_hora = df_tipo_dia.groupby('hour')['documento'].count()
+        unidades_kilo_por_hora = df_tipo_dia.groupby(['day_of_month', 'hour'])['unidades_kilo'].sum()
+        unidades_kilo_por_hora = unidades_kilo_por_hora.groupby('hour').mean()
 
-        prom_facturas_por_turnos = {}
+        """unidades_kilo_por_hora = df.groupby(['day_of_month', 'hour'])['unidades_kilo'].sum()
+
+        unidades_kilo_por_hora = unidades_kilo_por_hora.groupby('hour').mean()"""
+
+        prom_unidades_kilo_por_turnos = {}
         for turno, (inicio, fin) in turnos.items():
-            facturas_turno = facturas_por_hora.loc[inicio:fin].mean() if not facturas_por_hora.loc[inicio:fin].empty else 0
-            prom_facturas_por_turnos[turno] = facturas_turno
+            unidades_kilo_turno = unidades_kilo_por_hora.loc[inicio:fin].mean() if not unidades_kilo_por_hora.loc[inicio:fin].empty else 0
+            prom_unidades_kilo_por_turnos[turno] = unidades_kilo_turno
 
         metrics[tipo_dia] = {
-            'facturas_por_hora': facturas_por_hora.to_dict(),
-            'prom_facturas_por_turnos': prom_facturas_por_turnos
+            'unidades_kilo_por_hora': unidades_kilo_por_hora.to_dict(),
+            'prom_unidades_kilo_por_turnos': prom_unidades_kilo_por_turnos
         }
     
     # Cálculo de cajas por turno y proporciones para ambos tipos de día
     for tipo_dia in ['normal', 'mayor_demanda']:
-        prom_facturas_por_turnos = metrics[tipo_dia]['prom_facturas_por_turnos']
+        prom_unidades_kilo_por_turnos = metrics[tipo_dia]['prom_unidades_kilo_por_turnos']
 
-        total_prom_facturas = sum(prom_facturas_por_turnos.values())
+        total_prom_unidades_kilo = sum(prom_unidades_kilo_por_turnos.values())
         cajas_por_turno = {}
         proporciones = {}
 
-        for turno, promedio in prom_facturas_por_turnos.items():
-            proporcion = promedio / total_prom_facturas if total_prom_facturas > 0 else 0
+        for turno, promedio in prom_unidades_kilo_por_turnos.items():
+            proporcion = promedio / total_prom_unidades_kilo if total_prom_unidades_kilo > 0 else 0
             proporciones[turno] = proporcion
             cajas_asignadas = round(total_cajeras_disponibles * proporcion)
             cajas_por_turno[turno] = cajas_asignadas
@@ -197,76 +97,188 @@ def obtener_metricas_y_proporcion(df, turnos, total_cajeras_disponibles):
         metrics[tipo_dia]['cajas_por_turno'] = cajas_por_turno
         metrics[tipo_dia]['proporciones'] = proporciones
 
-    return metrics
+    return metrics, promedio_unidades_kilo_dia, umbral
 
 # Ejemplo de uso de la función
-metrics = obtener_metricas_y_proporcion(df, TURNOS, N_CAJERAS)
+metrics, promedio_unidades_kilo_dia, umbral = obtener_metricas_y_proporcion(df, TURNOS, N_CAJERAS)
 
 # Imprimir los resultados
-print("Métricas por tipo de día:")
-for tipo_dia, datos in metrics.items():
-    print(f"{tipo_dia.capitalize()}:")
-    print("Facturas por hora:")
-    print(datos['facturas_por_hora'])
-    print("Promedio de facturas por turnos:")
-    print(datos['prom_facturas_por_turnos'])
+print("\n##### METRICAS: #####")
+for tipo_dia, data in metrics.items():
+    print("\n------------------------------------------------------------------------------------------------------------------")
+    print(f"\n{tipo_dia.capitalize()}:")
+    print("Unidades kilo por hora:")
+    pprint.pprint(data['unidades_kilo_por_hora'])
+    print("Promedio de unidades kilo por turnos:")
+    pprint.pprint(data['prom_unidades_kilo_por_turnos'])
+    print("Proporciones de unidades kilo por turno:")
+    pprint.pprint(data['proporciones'])
     print("Cajas por turno:")
-    print(datos['cajas_por_turno'])
-    print("Proporciones de facturas por turno:")
-    print(datos['proporciones'])
-    print()
-    
-# Graficas
+    pprint.pprint(data['cajas_por_turno'])
+print("\n------------------------------------------------------------------------------------------------------------------")
+print("\nPromedio de unidades kilo por día:")
+print(promedio_unidades_kilo_dia)
+print(f"\nUmbral: {umbral}")
 
-# Promedio de facturas por turnos en días normales
-promedio_facturas_dias_normales = {
-    '6-7': 9857.0, '7-8': 13910.5, '8-9': 15687.5, '9-10': 16796.5,
-    '10-11': 16748.0, '11-12': 16942.5, '12-13': 14952.0, '13-14': 11356.0,
-    '14-15': 10593.5, '15-16': 10975.5, '16-17': 11868.0, '17-18': 12120.0,
-    '18-19': 9609.5, '19-20': 4323.5
-}
+print("\nGenerando graficas...")
 
-# Promedio de facturas por turnos en días de mayor demanda
-promedio_facturas_mayor_demanda = {
-    '6-7': 10746.0, '7-8': 15758.5, '8-9': 18288.5, '9-10': 19495.5,
-    '10-11': 19044.0, '11-12': 18915.0, '12-13': 16866.0, '13-14': 12993.5,
-    '14-15': 11844.5, '15-16': 12258.5, '16-17': 13106.5, '17-18': 13309.5,
-    '18-19': 11010.0, '19-20': 5346.5
-}
+# Graficar resultados
+# 1. Unidades kilo por días en promedio (con umbral)
 
-# Extraer turnos
-turnos = list(promedio_facturas_dias_normales.keys())
+# Crear DataFrame con el promedio de unidades kilo por día
+promedio_unidades_kilo = pd.DataFrame({
+    'Día': promedio_unidades_kilo_dia.index,
+    'Promedio_unidades_kilo': promedio_unidades_kilo_dia.values
+})
 
-# Extraer promedios
-facturas_normales = list(promedio_facturas_dias_normales.values())
-facturas_mayor_demanda = list(promedio_facturas_mayor_demanda.values())
-
-print("Generando gráfica...")
-
-# Crear gráfico
+# Crear el gráfico
 plt.figure(figsize=(10, 6))
+sns.barplot(x='Día', y='Promedio_unidades_kilo', data=promedio_unidades_kilo, palette='viridis')
 
-# Graficar datos de días normales
-plt.plot(turnos, facturas_normales, label='Días Normales', marker='o', color='blue')
+# Dibujar la línea del umbral
+plt.axhline(y=umbral, color='red', linestyle='--', label=f'Umbral ({umbral:.2f})')
 
-# Graficar datos de días de mayor demanda
-plt.plot(turnos, facturas_mayor_demanda, label='Días de Mayor Demanda', marker='o', color='orange')
-
-# Dibujar líneas para las franjas horarias
-plt.axvline(x='6-7', color='purple', linestyle='--', label='Apertura')
-plt.axvline(x='12-13', color='blue', linestyle='--', label='Cierre (Tarde)')
-plt.axvline(x='8-9', color='green', linestyle='--', label='Partido 1')
-plt.axvline(x='16-17', color='green', linestyle='--', label='Partido 2')
-plt.axvline(x='17-18', color='blue', linestyle='--')
-plt.axvline(x='19-20', color='green', linestyle='--')
-
-# Etiquetas y título
-plt.xlabel('Turnos')
-plt.ylabel('Promedio de Facturas')
-plt.title('Comparación de Promedio de Facturas por Turno con Franjas Horarias')
-plt.xticks(rotation=45)
+# Añadir título y etiquetas
+plt.title('Promedio de Unidades Kilo por Día y el Umbral')
+plt.xlabel('Días')
+plt.ylabel('Promedio de Unidades Kilo')
 plt.legend()
 
 # Mostrar gráfico
 plt.tight_layout()
+plt.show()
+
+# 2. Unidades kilo promedio en días normales y de mayor demanda
+
+# Extraer los datos para días normales y de mayor demanda
+promedio_unidades_kilo_normales = metrics['normal']['unidades_kilo_por_hora']
+promedio_unidades_kilo_mayor_demanda = metrics['mayor_demanda']['unidades_kilo_por_hora']
+
+# Crear gráfico comparativo
+plt.figure(figsize=(10, 6))
+
+# Dibujar líneas para las franjas horarias
+plt.axvline(x=6, color='purple', linestyle='--', label='Apertura')
+plt.axvline(x=12, color='blue', linestyle='--', label='Cierre')
+plt.axvline(x=8, color='green', linestyle='--', label='Partido 1')
+plt.axvline(x=16, color='green', linestyle='--', label='Partido 2')
+plt.axvline(x=14, color='purple', linestyle='--')
+plt.axvline(x=20, color='blue', linestyle='--')
+plt.axvline(x=19, color='green', linestyle='--')
+
+# Graficar datos de días normales
+plt.plot(promedio_unidades_kilo_normales.keys(), promedio_unidades_kilo_normales.values(), label='Días Normales', marker='o', color='blue')
+
+# Graficar datos de días de mayor demanda
+plt.plot(promedio_unidades_kilo_mayor_demanda.keys(), promedio_unidades_kilo_mayor_demanda.values(), label='Días de Mayor Demanda', marker='o', color='orange')
+
+# Etiquetas y título
+plt.xlabel('Horas del Día')
+plt.ylabel('Unidades Kilo')
+plt.title('Promedio de Unidades Kilo por Hora en Días Normales y Días de Mayor Demanda')
+plt.legend()
+plt.xticks(np.arange(6, 21, 1))  # Marcar cada hora relevante en el eje x
+plt.xlim(5, 21)
+plt.tight_layout()
+plt.show()
+
+################################################################################
+# DOMINGOS
+################################################################################
+
+# Cargar el archivo Excel y las hojas 'leve' y 'movida'
+xls = pd.ExcelFile(DOMINGOS)
+
+# Leer las hojas
+df_leve = pd.read_excel(xls, 'leve')
+df_movida = pd.read_excel(xls, 'movida')
+
+# Convertir la columna de 'fecha' a tipo datetime para extraer la hora
+df_leve['fecha'] = pd.to_datetime(df_leve['fecha'])
+df_movida['fecha'] = pd.to_datetime(df_movida['fecha'])
+
+# Asegurarse de que la columna 'cantidad' sea string antes de aplicar reemplazos
+df_leve['cantidad'] = df_leve['cantidad'].astype(str)
+df_movida['cantidad'] = df_movida['cantidad'].astype(str)
+
+# Convertir la columna 'cantidad' de texto a float, eliminando los puntos de miles y reemplazando comas con puntos
+df_leve['cantidad_numeric'] = df_leve['cantidad'].str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+df_movida['cantidad_numeric'] = df_movida['cantidad'].str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+
+# Crear la nueva columna 'unidades_kilo' dividiendo por 1000
+df_leve['unidades_kilo'] = df_leve['cantidad_numeric'] / 1000
+df_movida['unidades_kilo'] = df_movida['cantidad_numeric'] / 1000
+
+# Filtrar por el rango de horas de 6 a 19
+df_leve_filtered = df_leve[(df_leve['fecha'].dt.hour >= 6) & (df_leve['fecha'].dt.hour <= 19)]
+df_movida_filtered = df_movida[(df_movida['fecha'].dt.hour >= 6) & (df_movida['fecha'].dt.hour <= 19)]
+
+# Calcular el promedio de la columna 'unidades_kilo' por hora
+df_leve_avg = df_leve_filtered.groupby(df_leve_filtered['fecha'].dt.hour)['unidades_kilo'].sum()
+df_movida_avg = df_movida_filtered.groupby(df_movida_filtered['fecha'].dt.hour)['unidades_kilo'].sum()
+
+def obtener_metricas_domingos(df_leve, df_movida, turnos, total_cajeras_disponibles):
+    metrics_domingo = {}
+
+    for tipo_domingo, df_domingo in {'normal': df_leve, 'mayor_demanda': df_movida}.items():
+        # Agrupación por hora para obtener la suma de unidades kilo
+        unidades_kilo_por_hora = df_domingo.groupby(df_domingo['fecha'].dt.hour)['unidades_kilo'].sum()
+
+        # Calcular promedio de unidades kilo por turno
+        prom_unidades_kilo_por_turnos = {}
+        for turno, (inicio, fin) in turnos.items():
+            unidades_kilo_turno = unidades_kilo_por_hora.loc[inicio:fin].mean() if not unidades_kilo_por_hora.loc[inicio:fin].empty else 0
+            prom_unidades_kilo_por_turnos[turno] = unidades_kilo_turno
+
+        # Calcular proporciones y cajas por turno
+        total_prom_unidades_kilo = sum(prom_unidades_kilo_por_turnos.values())
+        cajas_por_turno = {}
+        proporciones = {}
+
+        for turno, promedio in prom_unidades_kilo_por_turnos.items():
+            proporcion = promedio / total_prom_unidades_kilo if total_prom_unidades_kilo > 0 else 0
+            proporciones[turno] = proporcion
+            cajas_asignadas = round(total_cajeras_disponibles * proporcion)
+            cajas_por_turno[turno] = cajas_asignadas
+
+        # Almacenar métricas de domingo en el diccionario
+        metrics_domingo[tipo_domingo] = {
+            'unidades_kilo_por_hora': unidades_kilo_por_hora.to_dict(),
+            'prom_unidades_kilo_por_turnos': prom_unidades_kilo_por_turnos,
+            'cajas_por_turno': cajas_por_turno,
+            'proporciones': proporciones
+        }
+
+    return metrics_domingo
+
+# Obtener métricas de domingos
+metrics_domingo = obtener_metricas_domingos(df_leve, df_movida, TURNOS, N_CAJERAS)
+
+# Imprimir resultados
+print("\n##### MÉTRICAS PARA DOMINGOS #####")
+for tipo_domingo, data in metrics_domingo.items():
+    print(f"\n{tipo_domingo.capitalize()}:")
+    #print("Unidades kilo por hora:")
+    #pprint.pprint(data['unidades_kilo_por_hora'])
+    print("Promedio de unidades kilo por turnos:")
+    pprint.pprint(data['prom_unidades_kilo_por_turnos'])
+    print("Proporciones de unidades kilo por turno:")
+    pprint.pprint(data['proporciones'])
+    print("Cajas por turno:")
+    pprint.pprint(data['cajas_por_turno'])
+
+
+# Crear la figura y el gráfico de líneas
+plt.figure(figsize=(10, 6))
+
+# Graficar los promedios de unidades kilo para 'leve' y 'movida'
+plt.plot(df_leve_avg.index, df_leve_avg.values, label='Domingos normales', marker='o')
+plt.plot(df_movida_avg.index, df_movida_avg.values, label='Domingos mayor demanda', marker='o')
+
+# Personalizar el gráfico
+plt.title('Promedio de Unidades Kilo con Respecto a la Hora')
+plt.xlabel('Horas')
+plt.ylabel('Promedio de Unidades Kilo')
+plt.xticks(range(6, 20))  # Mostrar las horas de 6 a 19
+plt.legend()
 plt.show()

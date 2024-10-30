@@ -38,14 +38,25 @@ CRONOGRAMAS = cargar_cronogramas()
 
 # distribucion de turnos 
 TURNOS = {
-    "apertura": (6, 12), # 8 horas
+    "apertura": (6, 14), # 8 horas
     "Partido_1": (8, 12), # 4 horas
-    "Partido_2": (16, 20), # 4 horas
-    "cierre": (12, 18) # 8 horas
+    "Partido_2": (16, 19), # 3 horas
+    "cierre": (12, 20) # 8 horas
 }
 
+"""TURNOS = {
+    "inicioApertura (de 6 a 8)": (6, 8), # 2 horas
+    "Apertura (de 8 a 13)": (8, 13), # 4 horas
+    "Partido (de 13 a 14)": (13, 14), # 5 horas
+    "Partido (de 14 a 16)": (14, 16), # 3 horas
+    "cierre (de 16 a 19)": (16, 19), # 7 horas
+    "Cierre (de 19 a 20)": (19, 20) # 2 horas
+}"""
+
+
 # numero de cajeras disponibles a evaluar 
-N_CAJERAS = 16  
+N_CAJERAS = 17  
 
 # rutas de datasets
 DATASET = BASE_DIR / 'data' / 'ventas.csv'
+DOMINGOS = BASE_DIR / 'data' / 'domingos.xlsx'

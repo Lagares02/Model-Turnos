@@ -99,6 +99,15 @@
 <body>
     <div class="container">
         <h1>Detalles del Cronograma de Semana con ID: {{ cronograma.id }}</h1>
+
+        <!-- Leyenda de Turnos -->
+        <div class="legend">
+            <span><span class="turno turno-A">A</span> Apertura (6:00 - 14:00)</span>
+            <span><span class="turno turno-P">P</span> Partido (8:00 - 12:00 / 16:00 - 19:00)</span>
+            <span><span class="turno turno-C">C</span> Cierre (12:00 - 20:00)</span>
+            <span><span class="rest">×</span> Descanso</span>
+        </div>
+        
         <table id="scheduleTable">
             <thead>
                 <tr>
@@ -116,13 +125,6 @@
                 <!-- Filas de datos dinámicas serán insertadas aquí -->
             </tbody>
         </table>
-        <!-- Leyenda de Turnos -->
-        <div class="legend">
-            <span><span class="turno turno-A">A</span> Apertura (6:00 - 12:00)</span>
-            <span><span class="turno turno-P">P</span> Partido (8:00 - 12:00 / 16:00 - 20:00)</span>
-            <span><span class="turno turno-C">C</span> Cierre (12:00 - 18:00)</span>
-            <span><span class="rest">×</span> Descanso</span>
-        </div>
         <div class="employee-info-container">
             <h1>Información de Empleados</h1>
             <div id="employeeCards">
